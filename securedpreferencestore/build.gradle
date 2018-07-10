@@ -1,11 +1,8 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: "com.jfrog.bintray"
 
 version = "0.5.0"
 android {
     compileSdkVersion 25
-    buildToolsVersion '25.0.3'
 
     defaultConfig {
         minSdkVersion 18
@@ -26,46 +23,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 
-def siteUrl = "https://github.com/iamMehedi/Secured-Preference-Store"
-def gitUrl = "https://github.com/iamMehedi/Secured-Preference-Store.git"
-
 group = "online.devliving"
-
-install {
-    repositories.mavenInstaller {
-        // This generates POM.xml with proper parameters
-        pom {
-            project {
-                packaging 'aar'
-
-                // Add your description here
-                name 'online.devliving:securedpreferencestore'
-                description = 'A secured SharedPreference wrapper for Android'
-                url siteUrl
-
-                // Set your license
-                licenses {
-                    license {
-                        name 'The Apache Software License, Version 2.0'
-                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                    }
-                }
-                developers {
-                    developer {
-                        id 'im_mehedi'
-                        name 'Mehedi Hasan Khan'
-                        email 'mehedi.mailing@gmail.com'
-                    }
-                }
-                scm {
-                    connection gitUrl
-                    developerConnection gitUrl
-                    url siteUrl
-                }
-            }
-        }
-    }
-}
 
 task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
@@ -88,27 +46,3 @@ artifacts {
 
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
-
-// https://github.com/bintray/gradle-bintray-plugin
-bintray {
-    user = properties.getProperty("bintray.user")
-    key = properties.getProperty("bintray.apikey")
-
-    configurations = ['archives']
-    pkg {
-        repo = "SecuredPreferenceStore"
-        // it is the name that appears in bintray when logged
-        name = "online.devliving:securedpreferencestore"
-        websiteUrl = siteUrl
-        vcsUrl = gitUrl
-        licenses = ["Apache-2.0"]
-        publish = true
-        version {
-            gpg {
-                sign = true //Determines whether to GPG sign the files. The default is false
-                passphrase = properties.getProperty("bintray.gpg.password")
-                //Optional. The passphrase for GPG signing'
-            }
-        }
-    }
-}
