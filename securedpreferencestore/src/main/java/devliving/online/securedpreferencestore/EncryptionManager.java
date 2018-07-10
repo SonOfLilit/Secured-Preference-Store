@@ -583,9 +583,11 @@ public class EncryptionManager {
     @SuppressWarnings("WrongConstant")
     void generateRSAKeys(Context context) throws NoSuchProviderException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, KeyStoreException {
         if (!mStore.containsAlias(RSA_KEY_ALIAS)) {
+            // try to fix #15
             Calendar start = Calendar.getInstance();
+            start.add(Calendar.HOUR_OF_DAY, -26);
             Calendar end = Calendar.getInstance();
-            end.add(Calendar.YEAR, 25);
+            end.add(Calendar.YEAR, 100);
 
             KeyPairGenerator keyGen = KeyPairGenerator.getInstance(KEY_ALGORITHM_RSA, KEYSTORE_PROVIDER);
 
